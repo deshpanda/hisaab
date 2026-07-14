@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Step-Up SIP Calculator — Annual Increase | Hisaab</title>
+  <meta name="description" content="Calculate the future value of a step-up (top-up) SIP where the monthly instalment rises by a fixed percentage every year. Year-wise table, comparison with a flat SIP, every formula shown.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/step-up-sip/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Step-Up SIP Calculator — Annual Increase">
+  <meta property="og:description" content="Future value of a SIP that grows with your income, with a year-wise breakdown.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/step-up-sip/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Step-Up SIP Calculator (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/step-up-sip/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/" aria-current="page">SIP</a>
+        <a href="../epf/">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">Investment maths — assumptions are yours</span>
+    <h1>Step-up SIP calculator</h1>
+    <p class="lead">A step-up (top-up) SIP raises your monthly instalment by a fixed percentage
+      every 12 months — matching a growing income. See the future value and the year-wise trail.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <div class="grid-2">
+          <div class="field">
+            <label for="sip">Starting monthly SIP</label>
+            <div class="input-money"><input class="input" id="sip" inputmode="numeric" value="10000"></div>
+          </div>
+          <div class="field">
+            <label for="step">Annual step-up (%)</label>
+            <input class="input" id="step" inputmode="decimal" value="10">
+            <div class="hint">Instalment rises once every 12 months.</div>
+          </div>
+          <div class="field">
+            <label for="rate">Expected return (% p.a.)</label>
+            <input class="input" id="rate" inputmode="decimal" value="12">
+          </div>
+          <div class="field">
+            <label for="years">Tenure (years)</label>
+            <input class="input" id="years" inputmode="numeric" value="10">
+          </div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Future value (step-up SIP)</p>
+        <p class="big" id="rFv">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <tbody>
+            <tr><td>Total invested</td><td class="num" id="bInv">—</td></tr>
+            <tr><td>Estimated gains</td><td class="num pos" id="bGain">—</td></tr>
+            <tr><td>Same SIP without step-up</td><td class="num" id="bFlat">—</td></tr>
+            <tr class="total"><td>Future value with step-up</td><td class="num" id="bFv">—</td></tr>
+          </tbody>
+        </table>
+        <details class="math">
+          <summary>Show the math — year by year</summary>
+          <div class="math-body" style="overflow-x:auto">
+            <p class="hint">Each instalment is invested at the start of the month and compounds
+              monthly at the expected return ÷ 12; the instalment rises by the step-up once a year.</p>
+            <table class="breakdown" id="mTable">
+              <thead>
+                <tr><th>Year</th><th class="num">Monthly instalment</th><th class="num">Invested so far</th><th class="num">Value at year end</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>Why step up a SIP</h2>
+      <p>Salaries typically grow every year; a flat SIP quietly shrinks as a share of your
+        income. Stepping up the instalment by even 5–10% annually adds substantially to the
+        final corpus because the later, larger instalments still get years of compounding.
+        The table above shows exactly how much of the outcome comes from the extra
+        contributions versus growth.</p>
+      <p>Related: <a href="../sip-vs-lumpsum/">SIP vs lumpsum</a> ·
+        <a href="../goal-planner/">how much SIP a goal needs</a>.</p>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not investment advice</strong>. Expected returns are your
+      assumption; actual mutual-fund returns are market-linked and not guaranteed. Taxes are
+      not modelled here.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { stepUpSipFutureValue, sipFutureValue } from '../lib/tvm.js';
+    import { toINR, toINRCompact, parseAmount } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const monthly = val('sip'), rate = val('rate'), years = val('years'), step = val('step');
+      const r = stepUpSipFutureValue(monthly, rate, years, step);
+      const flat = sipFutureValue(monthly, rate, years * 12);
+
+      $('rFv').textContent = toINRCompact(r.futureValue);
+      $('rSub').textContent = `${toINR(r.futureValue)} after ${years} years, stepping up ${step}% annually`;
+      $('bInv').textContent = toINR(r.invested);
+      $('bGain').textContent = toINR(r.gains);
+      $('bFlat').textContent = toINR(flat.futureValue);
+      $('bFv').textContent = toINR(r.futureValue);
+
+      const tbody = $('mTable').querySelector('tbody');
+      tbody.innerHTML = '';
+      for (const y of r.yearly) {
+        const tr = document.createElement('tr');
+        for (const cell of [y.year, toINR(y.monthlyInstalment), toINR(y.investedSoFar), toINR(y.valueAtYearEnd)]) {
+          const td = document.createElement('td');
+          td.textContent = String(cell);
+          if (typeof cell === 'string') td.className = 'num';
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

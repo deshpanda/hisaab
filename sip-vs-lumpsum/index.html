@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIP vs Lumpsum Calculator — Mutual Fund Returns | Hisaab</title>
+  <meta name="description" content="Compare SIP and lumpsum mutual-fund investing side by side: future value, amount invested and gains for any monthly SIP or one-time amount, expected return and tenure. Every formula shown.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/sip-vs-lumpsum/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SIP vs Lumpsum Calculator — Mutual Fund Returns">
+  <meta property="og:description" content="Future value of a monthly SIP vs a one-time lumpsum, computed transparently.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/sip-vs-lumpsum/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SIP vs Lumpsum Calculator (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/sip-vs-lumpsum/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/" aria-current="page">SIP</a>
+        <a href="../epf/">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">Investment maths — assumptions are yours</span>
+    <h1>SIP vs lumpsum calculator</h1>
+    <p class="lead">Future value of a monthly SIP and a one-time lumpsum, side by side,
+      at the same expected return. Both are computed transparently — nothing is recommended.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <div class="grid-2">
+          <div class="field">
+            <label for="sip">Monthly SIP</label>
+            <div class="input-money"><input class="input" id="sip" inputmode="numeric" value="10000"></div>
+          </div>
+          <div class="field">
+            <label for="lump">One-time lumpsum</label>
+            <div class="input-money"><input class="input" id="lump" inputmode="numeric" value="1200000"></div>
+          </div>
+          <div class="field">
+            <label for="rate">Expected return (% p.a.)</label>
+            <input class="input" id="rate" inputmode="decimal" value="12">
+            <div class="hint">An assumption, not a promise — equity returns vary widely.</div>
+          </div>
+          <div class="field">
+            <label for="years">Tenure (years)</label>
+            <input class="input" id="years" inputmode="numeric" value="10">
+          </div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <table class="breakdown">
+          <thead>
+            <tr><th></th><th class="num">SIP</th><th class="num">Lumpsum</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Amount invested</td><td class="num" id="sInv">—</td><td class="num" id="lInv">—</td></tr>
+            <tr><td>Estimated gains</td><td class="num pos" id="sGain">—</td><td class="num pos" id="lGain">—</td></tr>
+            <tr class="total"><td>Future value</td><td class="num" id="sFv">—</td><td class="num" id="lFv">—</td></tr>
+          </tbody>
+        </table>
+        <p class="sub" id="rNote" style="margin-top:10px"></p>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <ol>
+              <li>SIP (instalment at the start of each month):<br>
+                <code>FV = P × [((1+i)ⁿ − 1) ÷ i] × (1+i)</code>, where <code>i</code> = annual return ÷ 12 and <code>n</code> = months.
+                <span id="mSip"></span></li>
+              <li>Lumpsum (expected CAGR compounded annually):<br>
+                <code>FV = P × (1+r)ᵗ</code>. <span id="mLump"></span></li>
+            </ol>
+            <p class="hint">Both assume the rate stays constant — real returns don't. Taxes and
+              exit loads are not modelled; see the <a href="../capital-gains/">capital-gains calculator</a>
+              for tax on redemption.</p>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>SIP or lumpsum — what this page computes</h2>
+      <p>A <strong>SIP</strong> (systematic investment plan) invests a fixed amount every month, so
+        your money enters the market gradually at many price points. A <strong>lumpsum</strong>
+        invests everything on day one, so the full amount compounds for the whole tenure.
+        This page computes the arithmetic of both at a constant expected return — it does not
+        tell you which to choose, because the answer depends on whether you already have the
+        lumpsum, market conditions, and your own risk tolerance.</p>
+      <ul>
+        <li>At the same total invested and a steadily rising market, the lumpsum compounds longer.</li>
+        <li>A SIP spreads entry prices — useful when investing from a monthly salary.</li>
+        <li>Try our <a href="../step-up-sip/">step-up SIP calculator</a> to model an instalment that grows with your income.</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not investment advice</strong>. Expected returns are your
+      assumption; mutual-fund returns are market-linked and not guaranteed. This page computes
+      projections; it does not recommend any product or investment style.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { sipFutureValue, lumpsumFutureValue } from '../lib/tvm.js';
+    import { toINR, toINRCompact, parseAmount } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const rate = val('rate');
+      const years = val('years');
+      const s = sipFutureValue(val('sip'), rate, years * 12);
+      const l = lumpsumFutureValue(val('lump'), rate, years);
+
+      $('sInv').textContent = toINR(s.invested);
+      $('sGain').textContent = toINR(s.gains);
+      $('sFv').textContent = toINR(s.futureValue);
+      $('lInv').textContent = toINR(l.invested);
+      $('lGain').textContent = toINR(l.gains);
+      $('lFv').textContent = toINR(l.futureValue);
+
+      $('rNote').textContent =
+        `After ${years} years at ${rate}% p.a.: SIP grows to ${toINRCompact(s.futureValue)}, ` +
+        `the lumpsum to ${toINRCompact(l.futureValue)} (with different amounts invested).`;
+
+      $('mSip').textContent = ` Here: ${toINR(val('sip'))} × factor over ${years * 12} months → ${toINR(s.futureValue)}.`;
+      $('mLump').textContent = ` Here: ${toINR(val('lump'))} × (1 + ${rate}%)^${years} → ${toINR(l.futureValue)}.`;
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

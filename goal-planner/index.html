@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Goal Planner — Monthly SIP Needed for a Goal | Hisaab</title>
+  <meta name="description" content="How much monthly SIP (or one-time lumpsum) a financial goal needs: inflate today's cost to the goal date, then work back the required investment at your expected return. Every step shown.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/goal-planner/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Goal Planner — Monthly SIP Needed for a Goal">
+  <meta property="og:description" content="Inflate today's cost to the goal date, then work back the SIP or lumpsum it needs.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/goal-planner/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Financial Goal Planner (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/goal-planner/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/" aria-current="page">SIP</a>
+        <a href="../epf/">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">Investment maths — assumptions are yours</span>
+    <h1>Goal planner</h1>
+    <p class="lead">Enter a goal in today's rupees — education, a house, retirement — and see the
+      monthly SIP or one-time lumpsum it needs, after accounting for inflation until the goal date.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <div class="field">
+          <label for="goal">Goal amount (in today's rupees)</label>
+          <div class="input-money"><input class="input" id="goal" inputmode="numeric" value="10000000"></div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="years">Years to the goal</label>
+            <input class="input" id="years" inputmode="numeric" value="15">
+          </div>
+          <div class="field">
+            <label for="rate">Expected return (% p.a.)</label>
+            <input class="input" id="rate" inputmode="decimal" value="12">
+          </div>
+        </div>
+        <div class="field">
+          <label style="font-weight:500;display:flex;gap:8px;align-items:center;">
+            <input type="checkbox" id="adjInfl" checked style="width:auto;"> Adjust the goal for inflation
+          </label>
+        </div>
+        <div class="field" id="inflField">
+          <label for="infl">Inflation (% p.a.)</label>
+          <input class="input" id="infl" inputmode="decimal" value="6">
+          <div class="hint">What costs ₹1 today will cost more at the goal date; the target is inflated accordingly.</div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Monthly SIP needed</p>
+        <p class="big" id="rSip">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <tbody>
+            <tr><td>Goal in today's rupees</td><td class="num" id="bToday">—</td></tr>
+            <tr><td>Target at the goal date</td><td class="num" id="bTarget">—</td></tr>
+            <tr><td>Total SIP outgo</td><td class="num" id="bOutgo">—</td></tr>
+            <tr class="total"><td>Or a one-time lumpsum today</td><td class="num" id="bLump">—</td></tr>
+          </tbody>
+        </table>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <ol>
+              <li><span id="mInfl"></span></li>
+              <li>Required SIP inverts the SIP formula:
+                <code>P = target ÷ [((1+i)ⁿ − 1)/i × (1+i)]</code>, <code>i</code> = return ÷ 12.
+                <span id="mSip"></span></li>
+              <li>Lumpsum alternative discounts the target:
+                <code>P = target ÷ (1+r)ᵗ</code>. <span id="mLump"></span></li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>Why inflate the goal</h2>
+      <p>A goal that costs ₹1 crore today will not cost ₹1 crore in 15 years. At 6% inflation
+        it roughly doubles every 12 years — so planning against today's price systematically
+        undershoots. This planner first inflates today's cost to the goal date, then computes
+        the SIP (instalment at the start of each month, compounding monthly) or the single
+        upfront amount that reaches that inflated target at your expected return.</p>
+      <p>Related: <a href="../sip-vs-lumpsum/">SIP vs lumpsum</a> ·
+        <a href="../step-up-sip/">step-up SIP</a>.</p>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not investment advice</strong>. Returns and inflation are
+      your assumptions; real outcomes will differ. This page computes the arithmetic of a goal;
+      it does not recommend products or asset allocations.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { requiredSip, requiredLumpsum, inflateTarget } from '../lib/tvm.js';
+    import { toINR, toINRCompact, parseAmount, roundRupee } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const goal = val('goal'), years = val('years'), rate = val('rate');
+      const adjust = $('adjInfl').checked;
+      const infl = adjust ? val('infl') : 0;
+      $('inflField').hidden = !adjust;
+
+      const target = inflateTarget(goal, infl, years);
+      const sip = requiredSip(target, rate, years);
+      const lump = requiredLumpsum(target, rate, years);
+
+      $('rSip').textContent = toINR(roundRupee(sip));
+      $('rSub').textContent = `for ${years} years at ${rate}% p.a. to reach ${toINRCompact(target)}`;
+      $('bToday').textContent = toINR(goal);
+      $('bTarget').textContent = toINR(roundRupee(target));
+      $('bOutgo').textContent = toINR(roundRupee(sip * years * 12));
+      $('bLump').textContent = toINR(roundRupee(lump));
+
+      $('mInfl').textContent = adjust
+        ? `Inflating the goal: ${toINR(goal)} × (1 + ${infl}%)^${years} = ${toINR(roundRupee(target))}.`
+        : `No inflation adjustment — the target is today's amount, ${toINR(goal)}.`;
+      $('mSip').textContent = ` Here: ${toINR(roundRupee(target))} over ${years * 12} months → ${toINR(roundRupee(sip))}/month.`;
+      $('mLump').textContent = ` Here: ${toINR(roundRupee(target))} ÷ (1 + ${rate}%)^${years} = ${toINR(roundRupee(lump))}.`;
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>
