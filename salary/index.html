@@ -4,14 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>In-Hand Salary Calculator FY 2026-27 — Old vs New Regime | Hisaab</title>
-  <meta name="description" content="Calculate your monthly in-hand salary and income tax for FY 2026-27 (AY 2027-28). Compare old vs new regime, with EPF, professional tax, standard deduction, 87A rebate and marginal relief. Every step shown.">
+  <meta name="description" content="What actually hits your bank each month. In-hand salary for FY 2026-27 with old and new regime side by side — EPF, professional tax, the ₹12.75L zero-tax line, 87A rebate and marginal relief. Free, no ads, every step shown.">
   <link rel="canonical" href="https://deshpanda.github.io/hisaab/salary/">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="In-Hand Salary Calculator FY 2026-27 — Old vs New Regime">
-  <meta property="og:description" content="Monthly take-home and income tax for FY 2026-27, old vs new regime. Every step shown.">
+  <meta property="og:description" content="The number HR quoted vs the number your bank sees. Both regimes side by side, every step shown.">
   <meta property="og:url" content="https://deshpanda.github.io/hisaab/salary/">
+  <meta property="og:image" content="https://deshpanda.github.io/hisaab/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -21,6 +25,34 @@
     "operatingSystem": "Web",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
     "url": "https://deshpanda.github.io/hisaab/salary/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is ₹12.75 lakh salary really tax-free in FY 2026-27?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Effectively yes, under the new regime: the ₹75,000 standard deduction brings a ₹12.75 lakh gross salary down to ₹12 lakh taxable, and the Section 87A rebate (up to ₹60,000) wipes out the tax on that. You still pay EPF and professional tax, so in-hand is not the full gross." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens just above ₹12 lakh taxable income?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Marginal relief kicks in: your tax is capped at the amount by which taxable income exceeds ₹12,00,000, so earning slightly more never leaves you worse off after tax. Normal slab tax takes over at roughly ₹12.7 lakh taxable." }
+      },
+      {
+        "@type": "Question",
+        "name": "Which regime is better — old or new?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It depends on your deductions. The new regime allows only the ₹75,000 standard deduction but has lower rates and the big 87A rebate. The old regime allows HRA, 80C, 80D and home-loan interest but at steeper slabs. This calculator computes both side by side for your inputs so you can compare the actual in-hand amounts." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this calculator include HRA, 80C and other deductions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes — switch to the old regime and fields appear for 80C, 80D, HRA exemption, home-loan interest, NPS 80CCD(1B) and other deductions. In the new regime these are not allowed by law, so only the standard deduction applies." }
+      }
+    ]
   }
   </script>
 </head>
@@ -44,13 +76,24 @@
   <main class="wrap">
     <span class="fy-pill">FY <span data-fy>2026-27</span> · AY <span data-ay>2027-28</span></span>
     <h1>In-hand salary calculator</h1>
-    <p class="lead">Your monthly take-home pay and income tax for FY <span data-fy>2026-27</span>,
-      comparing the old and new regimes. Everything is computed in your browser.</p>
+    <p class="lead">The number HR quoted vs the number your bank sees. Enter your annual gross —
+      both regimes are computed side by side, with every rupee of the math on display.</p>
+
+    <p class="banner">Filing your FY 2025-26 return? Due <strong>31 July 2026</strong> — the
+      slabs were identical to FY 2026-27, so these numbers hold for that return too.</p>
+
+    <div class="chips" aria-label="Quick salary presets">
+      <button type="button" class="chip" data-gross="800000">8 LPA</button>
+      <button type="button" class="chip" data-gross="1200000">12 LPA</button>
+      <button type="button" class="chip" data-gross="1800000">18 LPA</button>
+      <button type="button" class="chip" data-gross="2500000">25 LPA</button>
+      <button type="button" class="chip" data-gross="3600000">36 LPA</button>
+    </div>
 
     <form class="calc" id="form">
       <div class="card">
         <fieldset>
-          <legend>Tax regime</legend>
+          <legend>Tax regime (details shown for)</legend>
           <div class="segmented" role="radiogroup" aria-label="Tax regime">
             <label><input type="radio" name="regime" value="new" checked><span>New regime</span></label>
             <label><input type="radio" name="regime" value="old"><span>Old regime</span></label>
@@ -130,6 +173,7 @@
         <p class="headline">Monthly in-hand</p>
         <p class="big" id="rMonthly">—</p>
         <p class="sub" id="rAnnual">—</p>
+        <p class="verdict" id="verdict">—</p>
         <table class="breakdown">
           <tbody>
             <tr><td>Gross salary</td><td class="num" id="bGross">—</td></tr>
@@ -158,6 +202,11 @@
             <p id="mNote" class="hint"></p>
           </div>
         </details>
+
+        <div class="share-row">
+          <button type="button" class="btn" id="copyBtn">Copy result</button>
+          <a class="btn" id="waShare" href="#" target="_blank" rel="noopener">Share on WhatsApp</a>
+        </div>
       </div>
     </form>
 
@@ -184,6 +233,36 @@
 
       <p>A 4% health &amp; education cess applies to the tax in both regimes; a surcharge
         applies at incomes above ₹50 lakh (capped at 25% in the new regime).</p>
+
+      <h2>Questions people ask</h2>
+      <div class="faq">
+        <details>
+          <summary>Is ₹12.75 lakh salary really tax-free in FY 2026-27?</summary>
+          <p>Effectively yes, under the new regime: the ₹75,000 standard deduction brings a
+            ₹12.75 lakh gross salary down to ₹12 lakh taxable, and the Section 87A rebate
+            (up to ₹60,000) wipes out the tax on that. You still pay EPF and professional
+            tax, so in-hand is not the full gross.</p>
+        </details>
+        <details>
+          <summary>What happens just above ₹12 lakh taxable income?</summary>
+          <p>Marginal relief kicks in: your tax is capped at the amount by which taxable
+            income exceeds ₹12,00,000, so earning slightly more never leaves you worse off
+            after tax. Normal slab tax takes over at roughly ₹12.7 lakh taxable.</p>
+        </details>
+        <details>
+          <summary>Which regime is better — old or new?</summary>
+          <p>It depends on your deductions. The new regime allows only the ₹75,000 standard
+            deduction but has lower rates and the big 87A rebate. The old regime allows HRA,
+            80C, 80D and home-loan interest but at steeper slabs. This page computes both
+            side by side for your inputs so you can compare the actual in-hand amounts.</p>
+        </details>
+        <details>
+          <summary>Does this calculator include HRA, 80C and other deductions?</summary>
+          <p>Yes — switch to the old regime and fields appear for 80C, 80D, HRA exemption,
+            home-loan interest, NPS 80CCD(1B) and other deductions. In the new regime these
+            are not allowed by law, so only the standard deduction applies.</p>
+        </details>
+      </div>
     </section>
 
     <p class="disclaimer">
@@ -198,39 +277,47 @@
       <div class="links">
         <a href="../">Home</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
       </div>
-      <div>© <span data-year>2026</span> Hisaab · FY <span data-fy>2026-27</span> rules · Not financial advice.</div>
+      <div>© <span data-year>2026</span> Hisaab · FY <span data-fy>2026-27</span> rules · Made in India ·
+        <a href="https://github.com/deshpanda/hisaab">Open source</a> · Not financial advice.</div>
     </div>
   </footer>
 
   <script type="module" src="../assets/site.js"></script>
   <script type="module">
     import { computeInHand } from '../lib/salary.js';
-    import { toINR } from '../lib/format.js';
+    import { toINR, parseAmount } from '../lib/format.js';
 
     const $ = (id) => document.getElementById(id);
-    const val = (id) => $(id).value;
     const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+    const PAGE_URL = 'https://deshpanda.github.io/hisaab/salary/';
 
     function regime() {
       return document.querySelector('input[name="regime"]:checked').value;
     }
 
-    function recalc() {
-      const rg = regime();
-      $('oldOnly').hidden = rg !== 'old';
-
-      const r = computeInHand({
+    function inputsFor(rg) {
+      return {
         grossAnnual: val('gross'),
         basicPct: val('basicPct'),
         regime: rg,
-        age: val('age'),
+        age: $('age').value,
         capPfAt15k: $('capPf').checked,
         professionalTax: val('profTax'),
         deductions: {
           sec80C: val('d80c'), sec80D: val('d80d'), hraExempt: val('dhra'),
           homeLoanInterest: val('dhli'), sec80CCD1B: val('d80ccd1b'), other: val('dother'),
         },
-      });
+      };
+    }
+
+    function recalc() {
+      const rg = regime();
+      $('oldOnly').hidden = rg !== 'old';
+
+      const rNew = computeInHand(inputsFor('new'));
+      const rOld = computeInHand(inputsFor('old'));
+      const r = rg === 'old' ? rOld : rNew;
 
       $('rMonthly').textContent = toINR(r.inHandMonthly);
       $('rAnnual').textContent = toINR(r.inHandAnnual) + ' per year';
@@ -239,6 +326,17 @@
       $('bPt').textContent = '− ' + toINR(r.professionalTax);
       $('bTax').textContent = '− ' + toINR(r.tax.totalTax);
       $('bNet').textContent = toINR(r.inHandAnnual);
+
+      // The side-by-side verdict — a computed fact, not a recommendation.
+      const diff = rNew.inHandMonthly - rOld.inHandMonthly;
+      const v = $('verdict');
+      if (diff === 0) {
+        v.innerHTML = 'Both regimes leave the same in hand for these inputs: <b>' + toINR(rNew.inHandMonthly) + '/mo</b>.';
+      } else {
+        const winner = diff > 0 ? 'new regime' : 'old regime';
+        v.innerHTML = 'For these inputs the <b>' + winner + '</b> leaves <b>' + toINR(Math.abs(diff)) +
+          '/month more</b> in hand — new: ' + toINR(rNew.inHandMonthly) + ' vs old: ' + toINR(rOld.inHandMonthly) + '.';
+      }
 
       const t = r.tax;
       $('mGross').textContent = toINR(r.gross);
@@ -255,7 +353,40 @@
       if (t.surchargeMarginalRelief > 0) notes.push('Surcharge marginal relief applied.');
       if (rg === 'new') notes.push('New regime: only the ₹75,000 standard deduction applies.');
       $('mNote').textContent = notes.join(' ');
+
+      // Shareable state: deep link + share text.
+      const shareUrl = PAGE_URL + '?gross=' + val('gross') + '&regime=' + rg;
+      history.replaceState(null, '', '?gross=' + val('gross') + '&regime=' + rg);
+      const text = 'In-hand for ' + toINR(val('gross')) + ' gross (FY 2026-27):\n' +
+        'New regime: ' + toINR(rNew.inHandMonthly) + '/mo · Old regime: ' + toINR(rOld.inHandMonthly) + '/mo\n' +
+        'Every ₹ of the math: ' + shareUrl;
+      $('waShare').href = 'https://wa.me/?text=' + encodeURIComponent(text);
+      $('waShare').dataset.text = text;
     }
+
+    // Preset chips
+    for (const chip of document.querySelectorAll('.chip[data-gross]')) {
+      chip.addEventListener('click', () => {
+        $('gross').value = chip.dataset.gross;
+        recalc();
+      });
+    }
+
+    // Copy result
+    $('copyBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText($('waShare').dataset.text || '');
+        $('copyBtn').textContent = 'Copied ✓';
+        setTimeout(() => { $('copyBtn').textContent = 'Copy result'; }, 1600);
+      } catch {
+        $('copyBtn').textContent = 'Press Ctrl+C';
+      }
+    });
+
+    // Deep-link prefill (?gross=1800000&regime=old)
+    const params = new URLSearchParams(location.search);
+    if (params.get('gross') && Number(params.get('gross')) > 0) $('gross').value = params.get('gross');
+    if (params.get('regime') === 'old') document.querySelector('input[name="regime"][value="old"]').checked = true;
 
     form.addEventListener('input', recalc);
     form.addEventListener('change', recalc);

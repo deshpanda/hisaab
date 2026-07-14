@@ -3,22 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hisaab — Clean, correct India money &amp; tax calculators (FY 2026-27)</title>
-  <meta name="description" content="Free, fast, ad-light India financial calculators: in-hand salary (old vs new regime), HRA exemption and equity capital-gains tax for FY 2026-27. Every formula is shown.">
+  <title>Hisaab — In-hand salary, HRA, capital gains &amp; 8 more India calculators (FY 2026-27)</title>
+  <meta name="description" content="What actually lands in your bank account — in-hand salary (old vs new regime), HRA exemption, capital-gains tax, EPF, NPS, SIP and more. Free, no ads, no sign-up, every formula shown. Updated for Budget 2026.">
   <link rel="canonical" href="https://deshpanda.github.io/hisaab/">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/styles.css">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Hisaab — India money &amp; tax calculators">
-  <meta property="og:description" content="Clean, correct, ad-light calculators for salary, HRA and capital-gains tax. FY 2026-27.">
+  <meta property="og:title" content="Hisaab — India money &amp; tax calculators that show the math">
+  <meta property="og:description" content="In-hand salary, HRA, capital gains, EPF, NPS, SIP — free, no ads, every formula shown. FY 2026-27.">
   <meta property="og:url" content="https://deshpanda.github.io/hisaab/">
+  <meta property="og:image" content="https://deshpanda.github.io/hisaab/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Hisaab",
     "url": "https://deshpanda.github.io/hisaab/",
-    "description": "India-specific financial and tax calculators for FY 2026-27."
+    "description": "India-specific financial and tax calculators for FY 2026-27 that show every formula."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is anything I type stored or sent anywhere?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Every calculator runs entirely in your browser — there is no server, no account, no analytics script, and no cookie. Close the tab and it's gone." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why should I trust the numbers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Every formula is cross-checked against at least two independent sources (official portals plus ClearTax, Zerodha and the like) and locked in with automated tests before a page ships. The whole site is open source — you can read the exact formula behind any result." }
+      },
+      {
+        "@type": "Question",
+        "name": "Old regime or new regime — which is better for me?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Whichever leaves more in your bank for your specific numbers — it mostly depends on how much you actually claim in deductions like HRA, 80C and home-loan interest. The salary calculator computes both regimes side by side so you can see the difference instead of guessing." }
+      }
+    ]
   }
   </script>
 </head>
@@ -40,62 +67,109 @@
   </header>
 
   <main class="wrap">
-    <span class="fy-pill">FY <span data-fy>2026-27</span> · AY <span data-ay>2027-28</span></span>
-    <h1>India money &amp; tax calculators — clean, fast, and correct</h1>
-    <p class="lead">No ad clutter, no sign-ups, no guesswork. Each calculator shows
-      exactly how the number is worked out, using the latest budget rules.</p>
+    <span class="fy-pill">FY <span data-fy>2026-27</span> · updated for Budget 2026</span>
+    <h1>Your CTC is a marketing number.</h1>
+    <p class="lead">Hisaab shows what actually lands in your bank — and the exact tax math
+      behind every rupee. Eleven calculators. No ads, no sign-up, nothing you type ever
+      leaves your browser.</p>
+
+    <p class="banner">Filing your FY 2025-26 return? It's due <strong>31 July 2026</strong> —
+      and Budget 2026 changed nothing, so the slabs here match your return year too.</p>
 
     <div class="tiles">
-      <a class="tile card" href="salary/">
-        <h3>In-hand salary calculator →</h3>
-        <p>Take-home pay and income tax, old vs new regime, with EPF, professional tax and marginal relief.</p>
+      <a class="tile tile-featured card" href="salary/">
+        <span class="kicker">Most used</span>
+        <h3>In-hand salary calculator</h3>
+        <p>The number HR quoted vs the number your bank sees. Old and new regime side by side,
+          with EPF, professional tax, the ₹12.75L zero-tax line and marginal relief.</p>
       </a>
       <a class="tile card" href="hra/">
-        <h3>HRA exemption calculator →</h3>
-        <p>How much of your House Rent Allowance is tax-free under Section 10(13A) — the least-of-three, shown.</p>
+        <span class="kicker">Old regime</span>
+        <h3>HRA exemption calculator</h3>
+        <p>Paying rent but not sure how much of your HRA is tax-free? The least-of-three rule, worked out in the open.</p>
       </a>
       <a class="tile card" href="capital-gains/">
-        <h3>Equity capital-gains calculator →</h3>
-        <p>STCG 20% / LTCG 12.5% on listed shares &amp; equity funds, the ₹1.25L exemption and loss set-off.</p>
+        <span class="kicker">Sold stocks?</span>
+        <h3>Equity capital-gains tax</h3>
+        <p>Know the damage before you file: STCG 20%, LTCG 12.5% over ₹1.25L, and how losses offset gains.</p>
       </a>
       <a class="tile card" href="sip-vs-lumpsum/">
-        <h3>SIP vs lumpsum calculator →</h3>
-        <p>Future value of a monthly SIP and a one-time lumpsum, side by side, formulas shown.</p>
+        <span class="kicker">Investing</span>
+        <h3>SIP vs lumpsum</h3>
+        <p>Same money, two ways in — see both futures side by side before you argue about it on Reddit.</p>
       </a>
       <a class="tile card" href="step-up-sip/">
-        <h3>Step-up SIP calculator →</h3>
-        <p>A SIP that rises with your income — annual step-up, year-wise table, vs a flat SIP.</p>
+        <span class="kicker">Investing</span>
+        <h3>Step-up SIP</h3>
+        <p>Your salary grows every year. Should your SIP? See what a 10% annual bump does over a decade.</p>
       </a>
       <a class="tile card" href="goal-planner/">
-        <h3>Goal planner →</h3>
-        <p>Inflate a goal to its future cost, then the monthly SIP or lumpsum it needs.</p>
+        <span class="kicker">Planning</span>
+        <h3>Goal planner</h3>
+        <p>"₹1 crore for the kid's education" costs a lot more than ₹1 crore by the time you need it. Plan against the real number.</p>
       </a>
       <a class="tile card" href="epf/">
-        <h3>EPF calculator →</h3>
-        <p>Year-by-year PF projection at the declared 8.25% — EPS routing and the official interest convention.</p>
+        <span class="kicker">Retirement</span>
+        <h3>EPF calculator</h3>
+        <p>Your PF at the declared 8.25% — computed the official EPFO way, not the shortcut most sites use.</p>
       </a>
       <a class="tile card" href="nps/">
-        <h3>NPS calculator →</h3>
-        <p>Corpus to 60, the Dec-2025 exit split (80/20), the 60% tax-free cap and your monthly pension.</p>
+        <span class="kicker">Rules changed Dec 2025</span>
+        <h3>NPS calculator</h3>
+        <p>The new 80/20 exit split, the 60% tax-free trap, and what your corpus buys as monthly pension.</p>
       </a>
       <a class="tile card" href="gratuity/">
-        <h3>Gratuity calculator →</h3>
-        <p>The statutory 15/26 formula with the exact rounding rule and the ₹20L exemption cap.</p>
+        <span class="kicker">Leaving a job?</span>
+        <h3>Gratuity calculator</h3>
+        <p>The 15/26 formula, the six-month rounding rule everyone gets wrong, and the ₹20L tax cap.</p>
       </a>
       <a class="tile card" href="rent-vs-buy/">
-        <h3>Rent vs buy calculator →</h3>
-        <p>EMI, stamp duty and appreciation vs rent growth and invested savings — net worth after your horizon.</p>
+        <span class="kicker">The eternal debate</span>
+        <h3>Rent vs buy</h3>
+        <p>EMI and appreciation vs rent and invested savings — who's actually richer after ten years, with your numbers.</p>
       </a>
     </div>
 
+    <div class="trust">
+      <span><b>Open source</b> — read the code, check the math</span>
+      <span>Every formula cross-checked against <b>2+ sources</b></span>
+      <span><b>No tracking</b>, no cookies, no sign-up</span>
+    </div>
+
     <section class="prose">
-      <h2>Why Hisaab</h2>
-      <ul>
-        <li><strong>Correct.</strong> Every formula is tested against worked examples cross-checked with at least two independent sources before it goes live.</li>
-        <li><strong>Transparent.</strong> A <em>“show the math”</em> panel on every calculator reveals each step — no black boxes.</li>
-        <li><strong>Fast &amp; private.</strong> Everything runs in your browser. Nothing you type is sent anywhere.</li>
-        <li><strong>Current.</strong> Built on FY <span data-fy>2026-27</span> (AY <span data-ay>2027-28</span>) rules.</li>
-      </ul>
+      <h2>Why this exists</h2>
+      <p>Search "in-hand salary calculator" and count the ad units before you find the input
+        box. Most Indian finance calculators are ad farms with a formula bolted on — and half
+        of them are still running last year's slabs.</p>
+      <p>Hisaab is the opposite bet: correct numbers, current rules, zero clutter. Every
+        calculator has a <em>show the math</em> panel because a number you can't verify is
+        just a rumour with confidence. The rates live in one config file, cross-checked
+        against official sources and locked with tests, and the whole thing is
+        <a href="https://github.com/deshpanda/hisaab">open source</a>.</p>
+      <p class="sig">— Samyak, software engineer, tired of counting ad units</p>
+
+      <h2>Questions people ask</h2>
+      <div class="faq">
+        <details>
+          <summary>Is anything I type stored or sent anywhere?</summary>
+          <p>No. Every calculator runs entirely in your browser — there is no server, no
+            account, no analytics script, and no cookie. Close the tab and it's gone.</p>
+        </details>
+        <details>
+          <summary>Why should I trust the numbers?</summary>
+          <p>Every formula is cross-checked against at least two independent sources
+            (official portals plus ClearTax, Zerodha and the like) and locked in with
+            automated tests before a page ships. The whole site is open source — you can
+            read the exact formula behind any result.</p>
+        </details>
+        <details>
+          <summary>Old regime or new regime — which is better for me?</summary>
+          <p>Whichever leaves more in your bank for your specific numbers — it mostly depends
+            on how much you actually claim in deductions like HRA, 80C and home-loan
+            interest. The <a href="salary/">salary calculator</a> computes both regimes side
+            by side so you can see the difference instead of guessing.</p>
+        </details>
+      </div>
     </section>
 
     <p class="disclaimer">
@@ -112,7 +186,8 @@
       <div class="links">
         <a href="salary/">Salary</a><a href="hra/">HRA</a><a href="capital-gains/">Capital gains</a><a href="sip-vs-lumpsum/">SIP vs lumpsum</a><a href="step-up-sip/">Step-up SIP</a><a href="goal-planner/">Goal planner</a><a href="epf/">EPF</a><a href="nps/">NPS</a><a href="gratuity/">Gratuity</a><a href="rent-vs-buy/">Rent vs buy</a>
       </div>
-      <div>© <span data-year>2026</span> Hisaab · FY <span data-fy>2026-27</span> rules · Not financial advice.</div>
+      <div>© <span data-year>2026</span> Hisaab · FY <span data-fy>2026-27</span> rules · Made in India ·
+        <a href="https://github.com/deshpanda/hisaab">Open source</a> · Not financial advice.</div>
     </div>
   </footer>
 
