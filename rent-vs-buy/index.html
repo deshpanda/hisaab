@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rent vs Buy Calculator (India) — Net Worth Comparison | Hisaab</title>
+  <meta name="description" content="Compare renting vs buying a home in India: EMI, stamp duty, maintenance and appreciation on one side; rent growth, deposit and invested savings on the other. See which path ends with more net worth under your assumptions.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/rent-vs-buy/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rent vs Buy Calculator (India) — Net Worth Comparison">
+  <meta property="og:description" content="A symmetric net-worth model for the rent-or-buy question, computed transparently.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/rent-vs-buy/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Rent vs Buy Calculator (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/rent-vs-buy/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/">SIP</a>
+        <a href="../epf/">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">A model, not a verdict — assumptions are yours</span>
+    <h1>Rent vs buy calculator</h1>
+    <p class="lead">Both people spend the same cash each month; the one paying less invests the
+      difference. After your horizon, who ends up with more net worth — the owner (home equity)
+      or the renter (investments)? Computed transparently from your assumptions.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <h3 style="margin-top:0">Buying</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="price">Property price</label>
+            <div class="input-money"><input class="input" id="price" inputmode="numeric" value="10000000"></div>
+          </div>
+          <div class="field">
+            <label for="down">Down payment</label>
+            <div class="input-money"><input class="input" id="down" inputmode="numeric" value="2000000"></div>
+          </div>
+          <div class="field">
+            <label for="upfront">Stamp duty + registration (%)</label>
+            <input class="input" id="upfront" inputmode="decimal" value="7">
+            <div class="hint">State-dependent, typically ~5–8% of price. Not recovered on sale.</div>
+          </div>
+          <div class="field">
+            <label for="lrate">Loan rate (% p.a.)</label>
+            <input class="input" id="lrate" inputmode="decimal" value="8.5">
+          </div>
+          <div class="field">
+            <label for="tenure">Loan tenure (years)</label>
+            <input class="input" id="tenure" inputmode="numeric" value="20">
+          </div>
+          <div class="field">
+            <label for="own">Maintenance + property tax (₹/month)</label>
+            <div class="input-money"><input class="input" id="own" inputmode="numeric" value="3500"></div>
+            <div class="hint">Grows at the same annual rate as rent.</div>
+          </div>
+          <div class="field">
+            <label for="appr">Property appreciation (% p.a.)</label>
+            <input class="input" id="appr" inputmode="decimal" value="5">
+          </div>
+        </div>
+
+        <h3>Renting</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="rent">Monthly rent</label>
+            <div class="input-money"><input class="input" id="rent" inputmode="numeric" value="30000"></div>
+          </div>
+          <div class="field">
+            <label for="rgrow">Rent growth (% p.a.)</label>
+            <input class="input" id="rgrow" inputmode="decimal" value="5">
+          </div>
+          <div class="field">
+            <label for="dep">Security deposit (refundable)</label>
+            <div class="input-money"><input class="input" id="dep" inputmode="numeric" value="200000"></div>
+          </div>
+        </div>
+
+        <h3>Common</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="horizon">Horizon (years)</label>
+            <input class="input" id="horizon" inputmode="numeric" value="10">
+            <div class="hint">How long before you'd sell / re-decide.</div>
+          </div>
+          <div class="field">
+            <label for="irate">Return on invested savings (% p.a.)</label>
+            <input class="input" id="irate" inputmode="decimal" value="12">
+          </div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Net worth after the horizon</p>
+        <p class="big" id="rHead">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <thead>
+            <tr><th></th><th class="num">Buyer</th><th class="num">Renter</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Home value − loan due</td><td class="num" id="bEquity">—</td><td class="num">—</td></tr>
+            <tr><td>Investments</td><td class="num" id="bInv">—</td><td class="num" id="rInv">—</td></tr>
+            <tr><td>Deposit returned</td><td class="num">—</td><td class="num" id="rDep">—</td></tr>
+            <tr class="total"><td>Net worth</td><td class="num" id="bNw">—</td><td class="num" id="rNw">—</td></tr>
+          </tbody>
+        </table>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <ol id="mSteps"></ol>
+            <p class="hint">Model: both sides spend max(owner outflow, rent) monthly; the cheaper
+              side invests the difference at your expected return (monthly compounding). The
+              buyer's upfront outgo is down payment + stamp/registration; the renter instead
+              invests that money (minus the deposit) on day one. Selling costs, home-loan tax
+              breaks and rent HRA benefits are not modelled — they can shift the result.</p>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>What this model counts</h2>
+      <ul>
+        <li><strong>Buyer:</strong> pays down payment + stamp duty upfront, then EMI + maintenance
+          monthly (maintenance escalating annually). Gains: home appreciation and loan paydown.
+          After the loan ends, the buyer's monthly cost drops to maintenance alone — the model
+          then invests the buyer's savings too.</li>
+        <li><strong>Renter:</strong> pays rent (escalating annually) and a refundable deposit,
+          and invests everything the buyer would have spent extra — starting with the down
+          payment on day one.</li>
+        <li><strong>Not modelled:</strong> Section 24(b)/80C tax breaks on the loan, HRA benefit
+          on rent, brokerage on sale, vacancy or society transfer charges. List your own — the
+          point of the model is that every assumption is visible and editable.</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not financial advice</strong>. Housing decisions involve
+      much more than arithmetic (stability, mobility, family). This page computes net worth
+      under your assumptions; it does not tell you what to do.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { compareRentVsBuy } from '../lib/rentbuy.js';
+    import { toINR, toINRCompact, parseAmount } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const r = compareRentVsBuy({
+        price: val('price'), downPayment: val('down'), upfrontCostsPct: val('upfront'),
+        loanRatePct: val('lrate'), tenureYears: val('tenure'), horizonYears: val('horizon'),
+        ownCostMonthly: val('own'), rentMonthly: val('rent'), rentGrowthPct: val('rgrow'),
+        securityDeposit: val('dep'), investReturnPct: val('irate'), appreciationPct: val('appr'),
+      });
+
+      const diff = r.buyMinusRent;
+      const ahead = diff >= 0 ? 'Buying' : 'Renting';
+      $('rHead').textContent = `${ahead} ends ${toINRCompact(Math.abs(diff))} ahead`;
+      $('rSub').textContent = `under these assumptions, after ${val('horizon')} years · EMI ${toINR(r.emi)}/month`;
+
+      $('bEquity').textContent = toINR(r.buyer.homeValue - r.buyer.loanOutstanding);
+      $('bInv').textContent = toINR(r.buyer.investments);
+      $('rInv').textContent = toINR(r.renter.investments);
+      $('rDep').textContent = toINR(r.renter.deposit);
+      $('bNw').textContent = toINR(r.buyer.netWorth);
+      $('rNw').textContent = toINR(r.renter.netWorth);
+
+      const steps = $('mSteps');
+      steps.innerHTML = '';
+      const lines = [
+        `Loan = price − down payment = ${toINR(r.loan)}; EMI at ${val('lrate')}% for ${val('tenure')} years = ${toINR(r.emi)}/month.`,
+        `Buyer's upfront outgo = down payment + ${val('upfront')}% costs = ${toINR(r.buyer.initialOutgo)}; the renter invests the same cash (minus the ${toINR(r.renter.deposit)} deposit) on day one.`,
+        `Over the horizon the buyer pays ${toINR(r.buyer.totalEmiPaid)} in EMIs (${toINR(r.buyer.interestPaid)} of it interest) + ${toINR(r.buyer.totalOwnCost)} maintenance; the renter pays ${toINR(r.renter.totalRentPaid)} rent.`,
+        `Home value grows to ${toINR(r.buyer.homeValue)}; loan outstanding ${toINR(r.buyer.loanOutstanding)} → equity ${toINR(r.buyer.homeValue - r.buyer.loanOutstanding)}.`,
+        `Invested savings: buyer ${toINR(r.buyer.investments)}, renter ${toINR(r.renter.investments)} (+ deposit ${toINR(r.renter.deposit)} back).`,
+        `Net worth: buyer ${toINR(r.buyer.netWorth)} vs renter ${toINR(r.renter.netWorth)} → difference ${toINR(Math.abs(diff))} in favour of ${ahead.toLowerCase()}.`,
+      ];
+      for (const l of lines) {
+        const li = document.createElement('li');
+        li.textContent = l;
+        steps.appendChild(li);
+      }
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

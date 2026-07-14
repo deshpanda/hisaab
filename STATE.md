@@ -65,13 +65,17 @@ Status key: 📋 planned · 🔨 building · ✅ shipped · 🗄️ archived
 | 1 | In-hand salary (old vs new regime, FY 2026-27) | `/salary/` | ✅ | ✔ 11 | ✔ SOURCES.md §1 |
 | 2 | HRA exemption | `/hra/` | ✅ | ✔ 4 | ✔ SOURCES.md §2 (metro list flagged — verify gazette) |
 | 3 | Equity capital-gains (STCG/LTCG, loss offsets) | `/capital-gains/` | ✅ | ✔ 5 | ✔ SOURCES.md §3 |
-| 4 | Rent vs buy (Indian metros) | `/rent-vs-buy/` | 📋 | — | — |
-| 5 | EPF projection | `/epf/` | 📋 | — | — |
-| 6 | NPS projection | `/nps/` | 📋 | — | — |
-| 7 | Gratuity | `/gratuity/` | 📋 | — | — |
-| 8 | SIP vs lumpsum | `/sip-vs-lumpsum/` | 📋 | — | — |
-| 9 | Step-up SIP | `/step-up-sip/` | 📋 | — | — |
-| 10 | Goal planner | `/goal-planner/` | 📋 | — | — |
+| 4 | Rent vs buy (Indian metros) | `/rent-vs-buy/` | ✅ | ✔ 9 | ✔ SOURCES.md §7 (EMI anchors; model documented) |
+| 5 | EPF projection | `/epf/` | ✅ | ✔ 7 | ✔ SOURCES.md §4 (8.25% FY25-26; Para 60(2) convention) |
+| 6 | NPS projection | `/nps/` | ✅ | ✔ 5 | ✔ SOURCES.md §5 (Dec-2025 PFRDA exit rules) |
+| 7 | Gratuity | `/gratuity/` | ✅ | ✔ 6 | ✔ SOURCES.md §6 (cap ₹20L; >6-months rounding) |
+| 8 | SIP vs lumpsum | `/sip-vs-lumpsum/` | ✅ | ✔ 12* | ✔ SOURCES.md §8-10 (anchors reproduce in print) |
+| 9 | Step-up SIP | `/step-up-sip/` | ✅ | ✔ 12* | ✔ SOURCES.md §8-10 (Zerodha/ClearTax exact) |
+| 10 | Goal planner | `/goal-planner/` | ✅ | ✔ 12* | ✔ SOURCES.md §8-10 (Angel One/SEBI convention) |
+
+\* rows 8-10 share the `tvm` suite (12 tests). Full suite: 62 tests, all green.
+All 10 planned calculators are live — next sessions grow content pages
+(guides/FAQs per calculator) toward the ~20-page AdSense bar.
 
 Target for AdSense application: ~20 pages live + real organic traffic.
 
@@ -80,7 +84,9 @@ Target for AdSense application: ~20 pages live + real organic traffic.
 ## Annual update checklist (budget day, once a year)
 
 1. Read the new Finance Act / Budget speech; note every changed rate, slab,
-   threshold, rebate, surcharge, exemption limit.
+   threshold, rebate, surcharge, exemption limit. Also check: the EPF rate
+   declaration (CBT, ~Feb-Mar), PFRDA exit-rule changes, the gratuity
+   exemption cap, and the HRA metro-list gazette status (open flag).
 2. Edit **`lib/config.js` only.** Update the `FY` label and every affected
    number. Each number has a source comment — update the sources too.
 3. Run `node --test`. Fix worked-example expectations against the new rules

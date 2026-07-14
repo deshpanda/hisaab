@@ -1,32 +1,11 @@
 # Deploy & first-time setup (manual steps)
 
-Everything is built and committed locally under your personal identity
-(`Samyak Deshpande <samyakd.2001@gmail.com>`), remote already set to
-`git@github.com-personal:deshpanda/hisaab.git`. Nothing has been pushed.
+Status: repo **created and pushed** ✅ (`deshpanda/hisaab`, identity
+`Samyak Deshpande <samyakd.2001@gmail.com>` via the `github.com-personal`
+SSH alias). Remaining manual steps below.
 
-The steps below are things **only you can do** — they need your `deshpanda`
-GitHub account (the `gh` CLI on this machine is signed in to your *work*
-account, so it can’t create this repo for you).
-
-## 1. Create the empty repo on GitHub (as `deshpanda`)
-
-1. Signed in as **deshpanda**, go to https://github.com/new
-2. Name: **`hisaab`**, visibility **Public**.
-3. **Do not** add a README, .gitignore or licence (the repo already has them).
-4. Create.
-
-## 2. Push
-
-The remote is already configured with your personal SSH alias, so from the
-repo folder:
-
-```sh
-cd ~/Documents/personal-github-repos/hisaab
-git push -u origin main
-```
-
-(If SSH complains, confirm `ssh -T git@github.com-personal` greets you as
-`deshpanda`.)
+## 1. ~~Create the repo~~ — done
+## 2. ~~Push~~ — done (`git push -u origin main`)
 
 ## 3. Enable GitHub Pages
 
