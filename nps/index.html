@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NPS Calculator — Retirement Corpus &amp; Monthly Pension | Hisaab</title>
+  <meta name="description" content="Project your NPS corpus to age 60 and split it under the December 2025 PFRDA rules: lump sum up to 80%, annuity minimum 20%, the 60% tax-free cap and your estimated monthly pension. Every step shown.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/nps/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NPS Calculator — Retirement Corpus &amp; Monthly Pension">
+  <meta property="og:description" content="NPS corpus, lump sum and pension under the current PFRDA exit rules, transparently computed.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/nps/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "NPS Calculator (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/nps/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/">SIP</a>
+        <a href="../epf/">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">PFRDA exit rules — updated Dec 2025</span>
+    <h1>NPS calculator</h1>
+    <p class="lead">Project your National Pension System corpus to retirement, then split it the
+      way the current rules allow — lump sum, annuity and estimated monthly pension.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <div class="grid-2">
+          <div class="field">
+            <label for="age">Your age</label>
+            <input class="input" id="age" inputmode="numeric" value="30">
+          </div>
+          <div class="field">
+            <label for="retire">Retirement age</label>
+            <input class="input" id="retire" inputmode="numeric" value="60">
+          </div>
+          <div class="field">
+            <label for="monthly">Monthly contribution</label>
+            <div class="input-money"><input class="input" id="monthly" inputmode="numeric" value="10000"></div>
+          </div>
+          <div class="field">
+            <label for="step">Annual step-up (%)</label>
+            <input class="input" id="step" inputmode="decimal" value="0">
+            <div class="hint">Optional: raise the contribution yearly.</div>
+          </div>
+          <div class="field">
+            <label for="rate">Expected return (% p.a.)</label>
+            <input class="input" id="rate" inputmode="decimal" value="10">
+            <div class="hint">Depends on your equity/debt mix; an assumption, not a promise.</div>
+          </div>
+          <div class="field">
+            <label for="annuityPct">Share used to buy the annuity (%)</label>
+            <input class="input" id="annuityPct" inputmode="numeric" value="40">
+            <div class="hint">Minimum 20% since Dec 2025 (was 40%). At 40%+ the whole lump sum stays tax-free.</div>
+          </div>
+          <div class="field">
+            <label for="annuityRate">Annuity rate (% p.a.)</label>
+            <input class="input" id="annuityRate" inputmode="decimal" value="6">
+            <div class="hint">Single-life annuities typically quote ~5.5-7.5%.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Corpus at retirement</p>
+        <p class="big" id="rCorpus">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <tbody>
+            <tr><td>Total contributed</td><td class="num" id="bInv">—</td></tr>
+            <tr><td>Growth</td><td class="num pos" id="bGain">—</td></tr>
+            <tr><td>Lump sum (tax-free part)</td><td class="num" id="bLumpFree">—</td></tr>
+            <tr><td>Lump sum (taxable part)</td><td class="num" id="bLumpTax">—</td></tr>
+            <tr><td>Annuity purchase</td><td class="num" id="bAnnuity">—</td></tr>
+            <tr class="total"><td>Estimated monthly pension</td><td class="num" id="bPension">—</td></tr>
+          </tbody>
+        </table>
+        <p class="sub" id="rSmall" style="margin-top:10px"></p>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <ol id="mSteps"></ol>
+            <p class="hint">Accumulation uses the SIP convention (contribution at the start of
+              each month, compounding monthly). The pension is pre-tax — annuity income is taxed
+              at your slab. Rules per the PFRDA (Exits &amp; Withdrawals) Amendment Regulations, 2025.</p>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>The exit rules this page applies (non-government subscribers)</h2>
+      <ul>
+        <li><strong>Since December 2025:</strong> at normal exit you may take up to <strong>80%</strong>
+          as lump sum; at least <strong>20%</strong> must buy an annuity. (The earlier rule was 60/40.)</li>
+        <li><strong>Tax hasn't caught up:</strong> only <strong>60% of the corpus</strong> is
+          tax-free as lump sum. Withdraw 80% and the extra 20 points are taxed at your slab —
+          the calculator shows that split explicitly.</li>
+        <li><strong>Small corpus:</strong> up to ₹8 lakh at exit can be withdrawn 100%.</li>
+        <li><strong>Normal exit</strong> now triggers at age 60 <em>or</em> 15 years of
+          subscription, whichever is earlier; phased withdrawals (SLW) can run to age 85.</li>
+        <li><strong>Deductions:</strong> the extra ₹50,000 under 80CCD(1B) is old-regime only;
+          in the new regime the employer's NPS contribution (up to 14% of Basic+DA) is the
+          deductible route.</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not investment or retirement advice</strong>. Returns and
+      annuity rates are assumptions; actual NPS performance is market-linked and annuity quotes
+      vary by provider and variant. Rules are PFRDA's and can change. Verify before deciding.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { npsProjection } from '../lib/nps.js';
+    import { toINR, toINRCompact, parseAmount } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const r = npsProjection({
+        currentAge: val('age'), retirementAge: val('retire'), monthly: val('monthly'),
+        expectedReturnPct: val('rate'), stepUpPct: val('step'),
+        annuityPct: val('annuityPct'), annuityRatePct: val('annuityRate'),
+      });
+
+      $('rCorpus').textContent = toINRCompact(r.corpus);
+      $('rSub').textContent = `${toINR(r.corpus)} over ${r.years} years`;
+      $('bInv').textContent = toINR(r.invested);
+      $('bGain').textContent = toINR(r.gains);
+      $('bLumpFree').textContent = toINR(r.taxFreeLumpsum);
+      $('bLumpTax').textContent = r.taxableLumpsum > 0 ? toINR(r.taxableLumpsum) : '—';
+      $('bAnnuity').textContent = toINR(r.annuityCorpus);
+      $('bPension').textContent = toINR(r.monthlyPension) + '/month';
+      $('rSmall').textContent = r.smallCorpusFullWithdrawal
+        ? 'Corpus is within ₹8 lakh — the rules allow withdrawing 100% of it at exit.'
+        : '';
+
+      const steps = $('mSteps');
+      steps.innerHTML = '';
+      const lines = [
+        `Corpus after ${r.years} years of ${toINR(val('monthly'))}/month at ${val('rate')}%${val('step') > 0 ? ` (stepping up ${val('step')}%/yr)` : ''}: ${toINR(r.corpus)}.`,
+        `Annuity share ${r.annuityPct}% → ${toINR(r.annuityCorpus)} buys the annuity; lump sum ${toINR(r.lumpsum)}.`,
+        r.taxableLumpsum > 0
+          ? `Tax-free lump sum is capped at 60% of corpus (${toINR(r.taxFreeLumpsum)}); the remaining ${toINR(r.taxableLumpsum)} is taxable at slab.`
+          : `The lump sum is within the 60%-of-corpus tax-free cap.`,
+        `Monthly pension = ${toINR(r.annuityCorpus)} × ${val('annuityRate')}% ÷ 12 = ${toINR(r.monthlyPension)} (pre-tax).`,
+      ];
+      for (const l of lines) {
+        const li = document.createElement('li');
+        li.textContent = l;
+        steps.appendChild(li);
+      }
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

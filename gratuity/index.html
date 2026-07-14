@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gratuity Calculator — 15/26 Formula &amp; ₹20L Exemption | Hisaab</title>
+  <meta name="description" content="Calculate gratuity under the Payment of Gratuity Act: (15/26) × last drawn Basic+DA × years of service, the over-6-months rounding rule, the not-covered 15/30 formula, and the ₹20 lakh tax-exemption cap.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/gratuity/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gratuity Calculator — 15/26 Formula">
+  <meta property="og:description" content="Gratuity under the Act, the rounding rule and the ₹20L exemption cap — shown step by step.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/gratuity/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Gratuity Calculator (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/gratuity/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/">SIP</a>
+        <a href="../epf/">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">Payment of Gratuity Act · ₹20L exemption cap</span>
+    <h1>Gratuity calculator</h1>
+    <p class="lead">What your employer owes on exit after 5+ years of service — the statutory
+      15/26 formula with the exact rounding rule, and the tax-exemption cap.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <fieldset>
+          <legend>Is the employer covered under the Gratuity Act?</legend>
+          <div class="segmented" role="radiogroup" aria-label="Coverage">
+            <label><input type="radio" name="cov" value="yes" checked><span>Covered (most are)</span></label>
+            <label><input type="radio" name="cov" value="no"><span>Not covered</span></label>
+          </div>
+          <div class="hint" style="margin-top:6px">Establishments with 10+ employees are covered.</div>
+        </fieldset>
+
+        <div class="field">
+          <label for="salary" id="salaryLabel">Last drawn Basic + DA (per month)</label>
+          <div class="input-money"><input class="input" id="salary" inputmode="numeric" value="50000"></div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="yrs">Completed years of service</label>
+            <input class="input" id="yrs" inputmode="numeric" value="10">
+          </div>
+          <div class="field">
+            <label for="mos">Extra months</label>
+            <input class="input" id="mos" inputmode="numeric" value="7">
+            <div class="hint">Counts as a full year only if more than 6.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Gratuity payable</p>
+        <p class="big" id="rAmt">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <tbody>
+            <tr><td>Years counted</td><td class="num" id="bYears">—</td></tr>
+            <tr><td>Formula</td><td class="num mono" id="bFormula">—</td></tr>
+            <tr><td>Tax-exempt (up to ₹20L cap)</td><td class="num pos" id="bExempt">—</td></tr>
+            <tr class="total"><td>Above the exemption cap</td><td class="num" id="bOver">—</td></tr>
+          </tbody>
+        </table>
+        <p class="sub" id="rElig" style="margin-top:10px"></p>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <ol id="mSteps"></ol>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>How gratuity is computed</h2>
+      <p><strong>Covered under the Act:</strong> gratuity = (15 ÷ 26) × last drawn Basic+DA ×
+        years of service, where a final part-year counts as a full year only when it
+        <em>exceeds</em> six months (10y 7m → 11 years; 10y 4m → 10). The 15/26 reflects
+        15 days' wages on a 26-working-day month.</p>
+      <p><strong>Not covered:</strong> (15 ÷ 30) × average salary of the last 10 months ×
+        completed years, with no rounding up.</p>
+      <h3>Worth knowing</h3>
+      <ul>
+        <li><strong>Eligibility:</strong> 5 years of continuous service (waived on death or
+          disablement). Courts have treated 4 years + 240 days as qualifying (Madras HC,
+          <em>Mettur Beardsell</em>) — persuasive but not guaranteed everywhere.</li>
+        <li><strong>Since Nov 2025</strong> (Code on Social Security), fixed-term employees get
+          pro-rata gratuity after just 1 year.</li>
+        <li><strong>Tax:</strong> for private-sector employees the exemption is the least of the
+          formula amount, the actual amount received, and ₹20,00,000 (lifetime). Government
+          employees' gratuity is fully exempt. The cap was not changed by Budget 2025 or 2026.</li>
+        <li>Some calculators round up at exactly 6 months; the statute says "in excess of six
+          months", which is what we follow.</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not legal or tax advice</strong>. Actual entitlement depends
+      on your employment terms, continuous-service determination and employer policy (employers
+      can pay more than the statutory minimum). Verify with HR or a professional.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { gratuityAmount } from '../lib/gratuity.js';
+    import { toINR, toINRCompact, parseAmount } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const covered = document.querySelector('input[name="cov"]:checked').value === 'yes';
+      $('salaryLabel').textContent = covered
+        ? 'Last drawn Basic + DA (per month)'
+        : 'Average salary of the last 10 months (per month)';
+
+      const r = gratuityAmount({
+        salaryMonthly: val('salary'), yearsCompleted: val('yrs'),
+        extraMonths: val('mos'), covered,
+      });
+
+      $('rAmt').textContent = toINRCompact(r.amount);
+      $('rSub').textContent = `${toINR(r.amount)} for ${r.yearsCounted} year${r.yearsCounted === 1 ? '' : 's'} counted`;
+      $('bYears').textContent = String(r.yearsCounted);
+      $('bFormula').textContent = covered ? '15/26 × salary × years' : '15/30 × salary × years';
+      $('bExempt').textContent = toINR(Math.min(r.amount, r.taxExemptCap));
+      $('bOver').textContent = r.amountOverCap > 0 ? toINR(r.amountOverCap) : '—';
+      $('rElig').textContent = r.eligible
+        ? ''
+        : 'Note: under 5 years of continuous service — statutory gratuity generally does not apply yet (exceptions: death/disablement; some courts accept 4 years + 240 days).';
+
+      const steps = $('mSteps');
+      steps.innerHTML = '';
+      const lines = covered ? [
+        `Years counted: ${val('yrs')} completed + ${val('mos')} month(s) → ${r.yearsCounted} (a part-year counts only when it exceeds 6 months).`,
+        `Gratuity = 15/26 × ${toINR(val('salary'))} × ${r.yearsCounted} = ${toINR(r.amount)}.`,
+        r.amountOverCap > 0
+          ? `Tax: ₹20,00,000 is exempt; ${toINR(r.amountOverCap)} is taxable as salary.`
+          : `Tax: within the ₹20,00,000 exemption cap (private sector, covered).`,
+      ] : [
+        `Years counted: ${r.yearsCounted} fully completed years (no rounding up when not covered).`,
+        `Gratuity = 15/30 × ${toINR(val('salary'))} × ${r.yearsCounted} = ${toINR(r.amount)} (half-month's average salary per year).`,
+        r.amountOverCap > 0
+          ? `Tax: ₹20,00,000 is exempt; ${toINR(r.amountOverCap)} is taxable as salary.`
+          : `Tax: within the ₹20,00,000 exemption cap.`,
+      ];
+      for (const l of lines) {
+        const li = document.createElement('li');
+        li.textContent = l;
+        steps.appendChild(li);
+      }
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

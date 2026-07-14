@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EPF Calculator — PF Corpus Projection at 8.25% | Hisaab</title>
+  <meta name="description" content="Project your EPF balance year by year: employee 12%, employer share after EPS, salary growth, and interest at the declared 8.25% rate credited annually — computed the official EPFO way, every step shown.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/epf/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EPF Calculator — PF Corpus Projection">
+  <meta property="og:description" content="Year-wise EPF projection with the official interest convention, transparently computed.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/epf/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EPF Calculator (India)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/epf/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+        <a href="../sip-vs-lumpsum/">SIP</a>
+        <a href="../epf/" aria-current="page">EPF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">Interest 8.25% — declared for FY 2025-26</span>
+    <h1>EPF calculator</h1>
+    <p class="lead">Your Employees' Provident Fund balance projected year by year — employee and
+      employer contributions, EPS routing, salary growth and interest credited the official way.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <div class="grid-2">
+          <div class="field">
+            <label for="basic">Basic + DA (per month)</label>
+            <div class="input-money"><input class="input" id="basic" inputmode="numeric" value="30000"></div>
+          </div>
+          <div class="field">
+            <label for="years">Years to project</label>
+            <input class="input" id="years" inputmode="numeric" value="25">
+          </div>
+          <div class="field">
+            <label for="raise">Annual salary increase (%)</label>
+            <input class="input" id="raise" inputmode="decimal" value="5">
+          </div>
+          <div class="field">
+            <label for="bal">Current EPF balance</label>
+            <div class="input-money"><input class="input" id="bal" inputmode="numeric" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="rate">Interest rate (% p.a.)</label>
+            <input class="input" id="rate" inputmode="decimal" value="8.25">
+            <div class="hint">8.25% is the declared FY 2025-26 rate; FY 2026-27 is announced ~Feb-Mar 2027.</div>
+          </div>
+          <div class="field">
+            <label for="vpf">Employee contribution (%)</label>
+            <input class="input" id="vpf" inputmode="decimal" value="12">
+            <div class="hint">Raise above 12% to model VPF (earns the same rate).</div>
+          </div>
+        </div>
+        <div class="field">
+          <label style="font-weight:500;display:flex;gap:8px;align-items:center;">
+            <input type="checkbox" id="cap" style="width:auto;"> Employer contributes only on ₹15,000 (statutory cap)
+          </label>
+          <div class="hint">Some employers cap PF at the ceiling: ₹1,800 employee + ₹550 employer/month.</div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Projected EPF corpus</p>
+        <p class="big" id="rCorpus">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <tbody>
+            <tr><td>Your contributions</td><td class="num" id="bEmp">—</td></tr>
+            <tr><td>Employer's contributions (EPF share)</td><td class="num" id="bEr">—</td></tr>
+            <tr><td>Interest earned</td><td class="num pos" id="bInt">—</td></tr>
+            <tr class="total"><td>Corpus</td><td class="num" id="bTotal">—</td></tr>
+          </tbody>
+        </table>
+        <details class="math">
+          <summary>Show the math — year by year</summary>
+          <div class="math-body" style="overflow-x:auto">
+            <p class="hint">Interest accrues monthly (rate ÷ 12) on the running balance and is
+              credited once at year end; a month's contribution starts earning from the following
+              month (Para 60(2), EPF Scheme). The employer's 12% first funds EPS (8.33% of wage,
+              capped at ₹15,000 → ₹1,250); only the remainder reaches your EPF account.</p>
+            <table class="breakdown" id="mTable">
+              <thead>
+                <tr><th>Year</th><th class="num">Basic+DA/mo</th><th class="num">You</th><th class="num">Employer</th><th class="num">Interest</th><th class="num">Balance</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>How EPF grows</h2>
+      <p>You contribute 12% of Basic + DA every month; your employer matches 12%, but 8.33%
+        of wage (capped at the ₹15,000 ceiling, i.e. up to ₹1,250) goes to the <strong>pension
+        scheme (EPS)</strong>, not your EPF balance — the projection above counts only what
+        actually lands in EPF. Interest is declared yearly (8.25% for FY 2025-26, the third
+        year at that rate) and credited annually on monthly running balances.</p>
+      <ul>
+        <li>The EPS portion builds a separate pension under its own formula — it is <em>not</em> part of this corpus.</li>
+        <li>VPF (voluntary contributions above 12%) earns the same declared rate.</li>
+        <li>EPF interest is tax-exempt within limits (employee contributions above ₹2.5L/yr earn taxable interest).</li>
+        <li>The wage ceiling was re-notified at ₹15,000 in May 2026; proposals to raise it to ₹21,000+ have not been notified.</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not financial advice</strong>. The interest rate is declared
+      yearly by EPFO and can change; projections assume it stays constant. Actual passbook
+      figures can differ with deposit timing and rounding. Verify with your EPFO passbook.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a><a href="../capital-gains/">Capital gains</a><a href="../sip-vs-lumpsum/">SIP vs lumpsum</a><a href="../step-up-sip/">Step-up SIP</a><a href="../goal-planner/">Goal planner</a><a href="../epf/">EPF</a><a href="../nps/">NPS</a><a href="../gratuity/">Gratuity</a><a href="../rent-vs-buy/">Rent vs buy</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { epfProjection } from '../lib/epf.js';
+    import { toINR, toINRCompact, parseAmount } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+    const val = (id) => { const v = parseAmount($(id).value); return Number.isNaN(v) ? 0 : v; };
+
+    function recalc() {
+      const r = epfProjection({
+        basicMonthly: val('basic'), years: val('years'), annualIncreasePct: val('raise'),
+        currentBalance: val('bal'), ratePct: val('rate'), employeePct: val('vpf'),
+        capAtCeiling: $('cap').checked,
+      });
+
+      $('rCorpus').textContent = toINRCompact(r.corpus);
+      $('rSub').textContent = `${toINR(r.corpus)} after ${val('years')} years at ${r.ratePct}% p.a.`;
+      $('bEmp').textContent = toINR(r.totalEmployee);
+      $('bEr').textContent = toINR(r.totalEmployer);
+      $('bInt').textContent = toINR(r.totalInterest);
+      $('bTotal').textContent = toINR(r.corpus);
+
+      const tbody = $('mTable').querySelector('tbody');
+      tbody.innerHTML = '';
+      for (const y of r.yearly) {
+        const tr = document.createElement('tr');
+        const cells = [y.year, toINR(y.wageMonthly), toINR(y.employeeContribution),
+          toINR(y.employerContribution), toINR(y.interestCredited), toINR(y.closingBalance)];
+        cells.forEach((c, idx) => {
+          const td = document.createElement('td');
+          td.textContent = String(c);
+          if (idx > 0) td.className = 'num';
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      }
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>
