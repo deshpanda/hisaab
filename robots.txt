@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://deshpanda.github.io/hisaab/sitemap.xml

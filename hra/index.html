@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HRA Exemption Calculator FY 2026-27 — Section 10(13A) | Hisaab</title>
+  <meta name="description" content="Calculate your tax-free House Rent Allowance for FY 2026-27 under Section 10(13A). See the least-of-three computation, metro vs non-metro, and how much HRA is taxable. Old regime only.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/hra/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HRA Exemption Calculator FY 2026-27 — Section 10(13A)">
+  <meta property="og:description" content="How much of your House Rent Allowance is tax-free — the least-of-three, shown step by step.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/hra/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HRA Exemption Calculator (India, FY 2026-27)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/hra/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/" aria-current="page">HRA</a>
+        <a href="../capital-gains/">Capital gains</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">FY <span data-fy>2026-27</span> · AY <span data-ay>2027-28</span></span>
+    <h1>HRA exemption calculator</h1>
+    <p class="lead">How much of your House Rent Allowance is tax-free under Section 10(13A) —
+      the exempt amount is the <em>least</em> of three figures. Enter monthly amounts.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <div class="field">
+          <label for="salary">Basic + DA (per month)</label>
+          <div class="input-money"><input class="input" id="salary" inputmode="numeric" value="50000"></div>
+          <div class="hint">“Salary” for HRA = Basic + Dearness Allowance (if it counts toward retirement benefits) + commission as a % of turnover. Other allowances are excluded.</div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="hra">HRA received (per month)</label>
+            <div class="input-money"><input class="input" id="hra" inputmode="numeric" value="20000"></div>
+          </div>
+          <div class="field">
+            <label for="rent">Rent paid (per month)</label>
+            <div class="input-money"><input class="input" id="rent" inputmode="numeric" value="25000"></div>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Is the rented home in a metro city?</legend>
+          <div class="segmented" role="radiogroup" aria-label="City type">
+            <label><input type="radio" name="city" value="metro" checked><span>Metro (50%)</span></label>
+            <label><input type="radio" name="city" value="non" ><span>Non-metro (40%)</span></label>
+          </div>
+        </fieldset>
+
+        <div class="callout callout-warn">
+          <strong>Which cities count as “metro”?</strong> Settled metros (50%):
+          <strong>Delhi, Mumbai, Kolkata, Chennai</strong>. Everywhere else has been 40%
+          (Gurugram/Gurgaon included). For FY <span data-fy>2026-27</span>, reports say the
+          50% list was widened to also cover <strong>Bengaluru, Hyderabad, Pune and
+          Ahmedabad</strong> under the new Income-tax Rules, 2026 — but we couldn’t confirm
+          this against the official gazette. If you live in one of these four,
+          <strong>verify with the notified rule or a CA before choosing 50%.</strong>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Annual HRA exemption (tax-free)</p>
+        <p class="big" id="rExempt">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <thead>
+            <tr><th>The least of these (monthly)</th><th class="num">Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Actual HRA received</td><td class="num" id="lA">—</td></tr>
+            <tr><td id="lBLabel">2. 50% of salary</td><td class="num" id="lB">—</td></tr>
+            <tr><td>3. Rent − 10% of salary</td><td class="num" id="lC">—</td></tr>
+            <tr class="total"><td>Exempt (monthly)</td><td class="num" id="lExempt">—</td></tr>
+          </tbody>
+        </table>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <p id="mExplain"></p>
+            <p class="hint">Annual figures = monthly × 12. If your salary, rent or city
+              changed during the year, compute each period separately and add the exempt
+              amounts — a single annual calculation can be wrong.</p>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>How HRA exemption works</h2>
+      <p>Under Section 10(13A), the tax-free part of your HRA is the <strong>least</strong> of:</p>
+      <ul>
+        <li>the actual HRA received;</li>
+        <li>50% of salary (metro) or 40% (non-metro);</li>
+        <li>rent paid minus 10% of salary.</li>
+      </ul>
+      <p>Here “salary” means Basic + eligible DA + commission as a fixed % of turnover —
+        not your full CTC. The remaining HRA (received minus exempt) is added to taxable salary.</p>
+
+      <h3>Key conditions</h3>
+      <ul>
+        <li><strong>Old regime only.</strong> HRA exemption is not available under the new
+          (default) regime — there, the entire HRA is taxable.</li>
+        <li><strong>You must actually pay rent</strong> and not own the home you live in.</li>
+        <li><strong>Landlord PAN</strong> is required if annual rent exceeds ₹1,00,000.</li>
+        <li><strong>Period-wise:</strong> if inputs change mid-year, split into periods and
+          add up — different limbs can bind in different months.</li>
+      </ul>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not tax advice</strong>. The “metro” city list for the
+      50% slab is subject to the notified Income-tax Rules; confirm your city’s treatment
+      before relying on it. Consult a qualified professional for your situation.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../capital-gains/">Capital gains</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · FY <span data-fy>2026-27</span> rules · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { hraExemption } from '../lib/hra.js';
+    import { toINR } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+
+    function recalc() {
+      const isMetro = document.querySelector('input[name="city"]:checked').value === 'metro';
+      const r = hraExemption({
+        salary: $('salary').value,
+        hraReceived: $('hra').value,
+        rentPaid: $('rent').value,
+        isMetro,
+      });
+
+      $('lBLabel').textContent = `2. ${Math.round(r.ratePct * 100)}% of salary`;
+      $('lA').textContent = toINR(r.limbs.actualHra);
+      $('lB').textContent = toINR(r.limbs.pctOfSalary);
+      $('lC').textContent = toINR(r.limbs.rentMinus10);
+      $('lExempt').textContent = toINR(r.exempt);
+
+      $('rExempt').textContent = toINR(r.exempt * 12);
+      $('rSub').textContent = `${toINR(r.exempt)} / month exempt · ${toINR(r.taxable * 12)} of your HRA stays taxable`;
+
+      const names = { actualHra: 'the actual HRA received', pctOfSalary: `${Math.round(r.ratePct * 100)}% of salary`, rentMinus10: 'rent minus 10% of salary' };
+      $('mExplain').textContent = r.exempt === 0
+        ? 'No exemption: with the rent and salary entered, the least of the three works out to zero (often because rent is below 10% of salary, or no HRA/rent).'
+        : `The smallest of the three is ${names[r.binding]}, so that is your exempt HRA: ${toINR(r.exempt)}/month (${toINR(r.exempt * 12)}/year).`;
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

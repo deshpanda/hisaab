@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Equity Capital Gains Tax Calculator FY 2026-27 — STCG 20% / LTCG 12.5% | Hisaab</title>
+  <meta name="description" content="Calculate tax on listed shares and equity mutual funds for FY 2026-27: STCG at 20% (Sec 111A), LTCG at 12.5% over the ₹1.25 lakh exemption (Sec 112A), with loss set-off and the 15% surcharge cap.">
+  <link rel="canonical" href="https://deshpanda.github.io/hisaab/capital-gains/">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Equity Capital Gains Tax Calculator FY 2026-27">
+  <meta property="og:description" content="STCG 20% / LTCG 12.5% on listed shares & equity funds, the ₹1.25L exemption and loss set-off — shown step by step.">
+  <meta property="og:url" content="https://deshpanda.github.io/hisaab/capital-gains/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Equity Capital Gains Tax Calculator (India, FY 2026-27)",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "url": "https://deshpanda.github.io/hisaab/capital-gains/"
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">
+        <img src="../assets/favicon.svg" alt="">
+        <span><b>Hisaab</b> <span>India money calculators</span></span>
+      </a>
+      <nav class="nav" aria-label="Calculators">
+        <a href="../salary/">Salary</a>
+        <a href="../hra/">HRA</a>
+        <a href="../capital-gains/" aria-current="page">Capital gains</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <span class="fy-pill">FY <span data-fy>2026-27</span> · AY <span data-ay>2027-28</span></span>
+    <h1>Equity capital-gains tax calculator</h1>
+    <p class="lead">Tax on <strong>listed shares and equity mutual funds</strong> (STT-paid)
+      for FY <span data-fy>2026-27</span>: short-term at 20%, long-term at 12.5% above the
+      ₹1.25 lakh exemption, with loss set-off.</p>
+
+    <form class="calc" id="form">
+      <div class="card">
+        <p class="hint" style="margin-top:0">Enter your gains and losses for the year. A holding of
+          <strong>12 months or less</strong> is short-term; <strong>over 12 months</strong> is long-term.
+          Losses as positive numbers.</p>
+        <div class="grid-2">
+          <div class="field">
+            <label for="stcg">Short-term capital gain</label>
+            <div class="input-money"><input class="input" id="stcg" inputmode="numeric" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="stcl">Short-term capital loss</label>
+            <div class="input-money"><input class="input" id="stcl" inputmode="numeric" value="0"></div>
+          </div>
+          <div class="field">
+            <label for="ltcg">Long-term capital gain</label>
+            <div class="input-money"><input class="input" id="ltcg" inputmode="numeric" value="175000"></div>
+          </div>
+          <div class="field">
+            <label for="ltcl">Long-term capital loss</label>
+            <div class="input-money"><input class="input" id="ltcl" inputmode="numeric" value="0"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="sur">Surcharge on these gains</label>
+          <select id="sur">
+            <option value="0" selected>None (total income under ₹50 lakh)</option>
+            <option value="0.10">10% (₹50 lakh – ₹1 crore)</option>
+            <option value="0.15">15% (above ₹1 crore)</option>
+          </select>
+          <div class="hint">Surcharge on equity gains is capped at 15%, even at higher incomes.</div>
+        </div>
+      </div>
+
+      <div class="card result" aria-live="polite">
+        <p class="headline">Total tax on these gains</p>
+        <p class="big" id="rTotal">—</p>
+        <p class="sub" id="rSub">—</p>
+        <table class="breakdown">
+          <tbody>
+            <tr><td>Net short-term gain (after losses)</td><td class="num" id="bNetS">—</td></tr>
+            <tr><td>STCG tax @ 20%</td><td class="num" id="bStcgTax">—</td></tr>
+            <tr><td>Net long-term gain (after losses)</td><td class="num" id="bNetL">—</td></tr>
+            <tr><td>Less: ₹1.25L exemption used</td><td class="num pos" id="bExempt">—</td></tr>
+            <tr><td>Taxable long-term gain</td><td class="num" id="bTaxL">—</td></tr>
+            <tr><td>LTCG tax @ 12.5%</td><td class="num" id="bLtcgTax">—</td></tr>
+            <tr><td>Surcharge</td><td class="num" id="bSur">—</td></tr>
+            <tr><td>Cess (4%)</td><td class="num" id="bCess">—</td></tr>
+            <tr class="total"><td>Total tax</td><td class="num" id="bTotal">—</td></tr>
+          </tbody>
+        </table>
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="math-body">
+            <ol id="mSteps"></ol>
+            <p class="hint" id="mCarry"></p>
+          </div>
+        </details>
+      </div>
+    </form>
+
+    <section class="prose">
+      <h2>How equity capital gains are taxed (FY <span data-fy>2026-27</span>)</h2>
+      <ul>
+        <li><strong>Short-term (Section 111A):</strong> held ≤ 12 months → <strong>20%</strong> flat.</li>
+        <li><strong>Long-term (Section 112A):</strong> held &gt; 12 months → <strong>12.5%</strong>,
+          on aggregate gains above a <strong>₹1,25,000</strong> yearly exemption. No indexation.</li>
+        <li>A 4% cess applies; surcharge on these gains is capped at 15%.</li>
+      </ul>
+
+      <h3>Setting off losses</h3>
+      <ul>
+        <li><strong>Short-term losses</strong> can be set against both short-term and long-term gains.</li>
+        <li><strong>Long-term losses</strong> can be set against long-term gains only.</li>
+        <li>Unabsorbed losses carry forward up to 8 assessment years, if you file your return by the due date.</li>
+      </ul>
+      <p>This calculator sets short-term losses against short-term gains first (they are
+        taxed higher), then against long-term gains — the tax-optimal order.</p>
+
+      <div class="callout">
+        <strong>Two things this tool does not do:</strong> the Section 87A rebate does not
+        apply to these special-rate gains; and if your other income is below the basic
+        exemption limit, part of these gains may be taxed at less — both are outside this
+        calculator. The rates are unchanged under the new Income-tax Act, 2025, which
+        renumbers (but does not alter) Sections 111A and 112A.
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      For information only — <strong>not tax or investment advice</strong>. Covers listed
+      (STT-paid) equity shares and equity mutual funds; other assets (debt funds, property,
+      unlisted shares, gold) follow different rules. Verify before filing.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="links">
+        <a href="../">Home</a><a href="../salary/">Salary</a><a href="../hra/">HRA</a>
+      </div>
+      <div>© <span data-year>2026</span> Hisaab · FY <span data-fy>2026-27</span> rules · Not financial advice.</div>
+    </div>
+  </footer>
+
+  <script type="module" src="../assets/site.js"></script>
+  <script type="module">
+    import { equityCapitalGainsTax } from '../lib/capgains.js';
+    import { toINR } from '../lib/format.js';
+
+    const $ = (id) => document.getElementById(id);
+    const form = $('form');
+
+    function recalc() {
+      const r = equityCapitalGainsTax({
+        stcg: $('stcg').value, stcl: $('stcl').value,
+        ltcg: $('ltcg').value, ltcl: $('ltcl').value,
+        surchargeRate: parseFloat($('sur').value) || 0,
+      });
+
+      $('rTotal').textContent = toINR(r.totalTax);
+      $('rSub').textContent = `STCG ${toINR(r.stcgTax)} + LTCG ${toINR(r.ltcgTax)} + surcharge/cess`;
+      $('bNetS').textContent = toINR(r.netStcg);
+      $('bStcgTax').textContent = toINR(r.stcgTax);
+      $('bNetL').textContent = toINR(r.netLtcg);
+      $('bExempt').textContent = r.ltcgExemptionUsed ? '− ' + toINR(r.ltcgExemptionUsed) : '—';
+      $('bTaxL').textContent = toINR(r.taxableLtcg);
+      $('bLtcgTax').textContent = toINR(r.ltcgTax);
+      $('bSur').textContent = r.surcharge ? toINR(r.surcharge) : '—';
+      $('bCess').textContent = toINR(r.cess);
+      $('bTotal').textContent = toINR(r.totalTax);
+
+      const steps = $('mSteps');
+      steps.innerHTML = '';
+      const lines = [];
+      r.steps.forEach((s) => lines.push(`${s.label}: ${toINR(Math.abs(s.amount))}`));
+      lines.push(`Exemption applied to long-term gains: ${toINR(r.ltcgExemptionUsed)}`);
+      lines.push(`STCG tax = 20% × ${toINR(r.netStcg)} = ${toINR(r.stcgTax)}`);
+      lines.push(`LTCG tax = 12.5% × ${toINR(r.taxableLtcg)} = ${toINR(r.ltcgTax)}`);
+      if (r.surcharge) lines.push(`Surcharge (${Math.round(r.surchargeRate * 100)}%) = ${toINR(r.surcharge)}`);
+      lines.push(`Cess = 4% × (${toINR(r.baseTax + r.surcharge)}) = ${toINR(r.cess)}`);
+      for (const l of lines) {
+        const li = document.createElement('li');
+        li.textContent = l;
+        steps.appendChild(li);
+      }
+
+      const carry = [];
+      if (r.stclCarryForward > 0) carry.push(`Short-term loss carried forward: ${toINR(r.stclCarryForward)}.`);
+      if (r.ltclCarryForward > 0) carry.push(`Long-term loss carried forward: ${toINR(r.ltclCarryForward)}.`);
+      $('mCarry').textContent = carry.join(' ');
+    }
+
+    form.addEventListener('input', recalc);
+    form.addEventListener('change', recalc);
+    recalc();
+  </script>
+</body>
+</html>

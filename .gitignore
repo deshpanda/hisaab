@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Node (only ever used for running tests locally; nothing is bundled/shipped)
+node_modules/
+npm-debug.log*
+
+# Editor
+*.log
